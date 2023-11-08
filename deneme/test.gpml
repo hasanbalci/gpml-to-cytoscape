@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="asd" Version="20231107" Organism="Anopheles gambiae">
+  <Graphics BoardWidth="753.0" BoardHeight="406.5" />
+  <DataNode TextLabel="GeneProduct" GraphId="b6173" Type="GeneProduct">
+    <Graphics CenterX="521.0" CenterY="364.0" Width="90.0" Height="25.0" ZOrder="32768" FontSize="12" Valign="Middle" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="GeneProduct" GraphId="caf35" Type="GeneProduct">
+    <Graphics CenterX="399.63636363636346" CenterY="178.2828282828284" Width="90.0" Height="25.0" ZOrder="32768" FontSize="12" Valign="Middle" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="Metabolite" GraphId="cf6b6" Type="Metabolite">
+    <Graphics CenterX="469.6969696969697" CenterY="279.7979797979798" Width="90.0" Height="25.0" ZOrder="32768" FontSize="12" Valign="Middle" Color="0000ff" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <DataNode TextLabel="GeneProduct" GraphId="f21b6" Type="GeneProduct">
+    <Graphics CenterX="634.0" CenterY="260.0" Width="90.0" Height="25.0" ZOrder="32768" FontSize="12" Valign="Middle" />
+    <Xref Database="" ID="" />
+  </DataNode>
+  <Interaction GraphId="bcfe7">
+    <Graphics ZOrder="12288" LineThickness="1.0">
+      <Point X="611.5" Y="272.5" GraphRef="f21b6" RelX="-0.5" RelY="1.0" />
+      <Point X="521.0" Y="351.5" GraphRef="b6173" RelX="0.0" RelY="-1.0" ArrowHead="mim-modification" />
+      <Anchor Position="0.5335900363531368" Shape="None" GraphId="a2e92" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="bcfe8">
+    <Graphics ZOrder="12288" LineThickness="1.0">
+      <Point X="444.63636363636346" Y="178.2828282828284" GraphRef="caf35" RelX="1.0" RelY="0.0" />
+      <Point X="589.0" Y="253.75" GraphRef="f21b6" RelX="-1.0" RelY="-0.5" ArrowHead="mim-necessary-stimulation" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <Interaction GraphId="bcfe9">
+    <Graphics ZOrder="12288" LineThickness="1.0">
+      <Point X="514.6969696969697" Y="286.0479797979798" GraphRef="cf6b6" RelX="1.0" RelY="0.5" />
+      <Point X="563.2101017100412" Y="314.6536128718978" GraphRef="a2e92" RelX="0.0" RelY="0.0" ArrowHead="mim-catalysis" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <InfoBox CenterX="0.0" CenterY="0.0" />
+</Pathway>
+

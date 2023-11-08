@@ -1,0 +1,52 @@
+{
+  "name": "sbgnml-to-cytoscape",
+  "version": "4.0.4",
+  "description": "A tool to convert sbgn-ml files to json for Cytoscape.js",
+  "main": "dist/sbgnml-to-cytoscape.js",
+  "scripts": {
+    "test": "mocha --require babel-polyfill --compilers js:babel-register",
+    "clean": "rm -rf dist/*",
+    "build": "browserify --standalone sbgnml-to-cytoscape -e src/index.js -d -t [ babelify --comments false ] | derequire > dist/sbgnml-to-cytoscape.js",
+    "watch": "watchify --standalone sbgnml-to-cytoscape -e src/index.js -d -t [ babelify --comments false ] -o 'derequire > dist/sbgnml-to-cytoscape.js' --poll=50 --verbose",
+    "build-test": "browserify test/*.js -o test/testenv/test-bundle.js -d",
+    "watch-test": "watchify test/*.js -o test/testenv/test-bundle.js -d --poll=50 --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PathwayCommons/sbgnml-converter.git"
+  },
+  "keywords": [
+    "sbgn",
+    "sbgnml",
+    "sbgn-ml",
+    "json",
+    "converter",
+    "biology",
+    "cytoscape",
+    "cytoscape.js",
+    "graph",
+    "xml"
+  ],
+  "author": "Dylan Fong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PathwayCommons/sbgnviz-js/issues"
+  },
+  "homepage": "https://github.com/PathwayCommons/sbgnml-converter#readme",
+  "devDependencies": {
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-latest": "^6.22.0",
+    "babel-register": "^6.23.0",
+    "babelify": "^7.3.0",
+    "browserify": "^14.1.0",
+    "chai": "^3.5.0",
+    "derequire": "^2.0.6",
+    "eslint": "^3.16.1",
+    "mocha": "^3.2.0",
+    "watchify": "^3.9.0"
+  },
+  "dependencies": {
+    "object-path": "^0.11.4",
+    "xml-js": "^1.0.2"
+  }
+}
