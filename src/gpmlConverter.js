@@ -22,7 +22,9 @@ module.exports = (gpnmlText) => {
   const labels = [];
   const shapes = [];
   const groups = [];
-  const interactions = [];  
+  const interactions = [];
+  const graphicalLines = [];
+  
   if (result.DataNode) {
     if (Array.isArray(result.DataNode)) {
       dataNodes.push(...result.DataNode);
@@ -58,16 +60,30 @@ module.exports = (gpnmlText) => {
       interactions.push(result.Interaction);
     }
   }
+  if (result.GraphicalLine) {
+    if (Array.isArray(result.GraphicalLine)) {
+      graphicalLines.push(...result.GraphicalLine);
+    } else {
+      graphicalLines.push(result.GraphicalLine);
+    }
+  }  
 
   const allNodes = {
     dataNodes: dataNodes,
     labels: labels,
     shapes: shapes,
     groups: groups,
-    interactions: interactions
+    interactions: interactions,
+    graphicalLines: graphicalLines
   };
+
+  const allEdges = {
+    interactions: interactions,
+    graphicalLines: graphicalLines
+  }
+
   const {nodes: nodes, nodeIdSet: nodeIdSet, portIdMap} = nodesConverter(allNodes);
-  const edges = edgesConverter(interactions, nodeIdSet, portIdMap);
-  console.log(edges)
+  const edges = edgesConverter(allEdges, nodeIdSet, portIdMap);
+  console.log(nodes)
   return {nodes: nodes, edges: edges};
 };

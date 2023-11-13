@@ -159,6 +159,7 @@ const convertGroup = (group) => {
   };
 };
 
+// return node for the anchor
 const convertAnchor = (interaction, anchor) => {
   const anchorPos = parseFloat(objPath.get(anchor, '_attributes.Position'));
   const sourcePoint = objPath.get(interaction, 'Graphics.Point')[0];
@@ -179,6 +180,44 @@ const convertAnchor = (interaction, anchor) => {
     }
   };
 };
+
+// return node(s) for the source and target of the graphical line, if they don't exist 
+const convertGraphicalLine = (graphicalLine, nodeIdSet) => {
+  const sourcePoint = objPath.get(graphicalLine, 'Graphics.Point')[0];
+  const targetPoint = objPath.get(graphicalLine, 'Graphics.Point')[1];
+  const sourcePointPos = {x: parseFloat(objPath.get(sourcePoint, '_attributes.X')), y: parseFloat(objPath.get(sourcePoint, '_attributes.Y'))};
+  const targetPointPos = {x: parseFloat(objPath.get(targetPoint, '_attributes.X')), y: parseFloat(objPath.get(targetPoint, '_attributes.Y'))};
+  const sourceId = objPath.get(sourcePoint, '_attributes.GraphId');
+  const targetId = objPath.get(targetPoint, '_attributes.GraphId');
+
+  let nodes = [];
+  if (sourceId && !nodeIdSet.has(sourceId)) {
+    let sourceData = {
+      data: {
+        id: sourceId,
+        bbox: {x: sourcePointPos.x, y: sourcePointPos.y, w: 1, h: 1},
+        class: 'DummyNode',
+        style: {}
+      }
+    }
+    nodeIdSet.add(sourceId);
+    nodes.push(sourceData);
+  }
+  if (targetId && !nodeIdSet.has(targetId)) {
+    let targetData = {
+      data: {
+        id: targetId,
+        bbox: {x: targetPointPos.x, y: targetPointPos.y, w: 1, h: 1},
+        class: 'DummyNode',
+        style: {}
+      }
+    }
+    nodeIdSet.add(targetId);
+    nodes.push(targetData);
+  }
+
+  return nodes;
+}
 
 const getPorts = (glyph) => {
   return [].concat(objPath.get(glyph, 'port', [])).map((port) => {
@@ -264,7 +303,18 @@ module.exports = (allNodes) => {
       nodes.push(processedAnchor);
       nodeIdSet.add(currAnchorId);
     }
-  }  
+  }
+
+  // process graphical lines to extract source and target nodes
+  stack.push(...allNodes.graphicalLines);
+  while (stack.length > 0) {
+    const currGraphicalLine = stack.pop();
+    const processedGraphicalLine = convertGraphicalLine(currGraphicalLine, nodeIdSet);
+
+    if (processedGraphicalLine.length > 0) {
+      nodes.push(...processedGraphicalLine);
+    }
+  }
 
   return {
     nodes: nodes,

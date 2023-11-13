@@ -1,23 +1,23 @@
 {
-  "name": "sbgnml-to-cytoscape",
+  "name": "gpml-to-cytoscape",
   "version": "4.0.4",
   "description": "A tool to convert sbgn-ml files to json for Cytoscape.js",
-  "main": "dist/sbgnml-to-cytoscape.js",
+  "main": "dist/gpml-to-cytoscape.js",
   "scripts": {
     "test": "mocha --require babel-polyfill --compilers js:babel-register",
     "clean": "rm -rf dist/*",
-    "build": "browserify --standalone sbgnml-to-cytoscape -e src/index.js -d -t [ babelify --comments false ] | derequire > dist/sbgnml-to-cytoscape.js",
-    "watch": "watchify --standalone sbgnml-to-cytoscape -e src/index.js -d -t [ babelify --comments false ] -o 'derequire > dist/sbgnml-to-cytoscape.js' --poll=50 --verbose",
+    "build": "browserify --standalone gpml-to-cytoscape -e src/index.js -d -t [ babelify --comments false ] | derequire > dist/gpml-to-cytoscape.js",
+    "watch": "watchify --standalone gpml-to-cytoscape -e src/index.js -d -t [ babelify --comments false ] -o 'derequire > dist/gpml-to-cytoscape.js' --poll=50 --verbose",
     "build-test": "browserify test/*.js -o test/testenv/test-bundle.js -d",
     "watch-test": "watchify test/*.js -o test/testenv/test-bundle.js -d --poll=50 --verbose"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PathwayCommons/sbgnml-converter.git"
+    "url": "git+https://github.com/PathwayCommons/gpml-converter.git"
   },
   "keywords": [
     "sbgn",
-    "sbgnml",
+    "gpml",
     "sbgn-ml",
     "json",
     "converter",
@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/PathwayCommons/sbgnviz-js/issues"
   },
-  "homepage": "https://github.com/PathwayCommons/sbgnml-converter#readme",
+  "homepage": "https://github.com/PathwayCommons/gpml-converter#readme",
   "devDependencies": {
     "babel-polyfill": "^6.23.0",
     "babel-preset-latest": "^6.22.0",

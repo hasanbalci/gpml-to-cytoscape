@@ -106,16 +106,38 @@ const convertInteraction = (interaction, nodeIdSet, portIdMap) => {
   }
 };
 
+const convertGraphicalLine = (graphicalLine, nodeIdSet, portIdMap) => {
+  const sourcePoint = objPath.get(graphicalLine, 'Graphics.Point')[0];
+  const source = objPath.get(sourcePoint, '_attributes.GraphId', '');
+  const targetPoint = objPath.get(graphicalLine, 'Graphics.Point')[1];
+  const target = objPath.get(targetPoint, '_attributes.GraphId', '');	
+	return {
+		data: {
+			id: getId(graphicalLine),
+			//'class': getClass(interaction),
+			//cardinality: interaction.glyph ? getCardinality(interaction.glyph): 0,
+			source: getSource(graphicalLine, nodeIdSet, portIdMap) || source,
+			target: getTarget(graphicalLine, nodeIdSet, portIdMap) || target,
+			class: 'graphicalLine',
+			style: getStyle(graphicalLine)
+			//bendPointPositions: getBendPointPositions(interaction)
+		}
+	};
+}
+
 const validInteraction = (interaction, nodeIdSet, portIdMap) => {
   const srcNodeId = getSource(interaction, nodeIdSet, portIdMap);
   const tgtNodeId = getTarget(interaction, nodeIdSet, portIdMap);
   return (nodeIdSet.has(srcNodeId)) && (nodeIdSet.has(tgtNodeId));
 };
 
-const convertEdges = (interactions, nodeIdSet, portIdMap) => {
-	const validInstractions = interactions.filter((interaction) => validInteraction(interaction, nodeIdSet, portIdMap));
+const convertEdges = (allEdges, nodeIdSet, portIdMap) => {
 	const edges = [];
-	validInstractions.forEach((interaction) => {
+
+	// process interactions
+	let interactions = allEdges.interactions;
+	const validInteractions = interactions.filter((interaction) => validInteraction(interaction, nodeIdSet, portIdMap));
+	validInteractions.forEach((interaction) => {
 		const edge = convertInteraction(interaction, nodeIdSet, portIdMap);
 		if (Array.isArray(edge)) {
 			edges.push(...edge);
@@ -124,6 +146,14 @@ const convertEdges = (interactions, nodeIdSet, portIdMap) => {
 			edges.push(edge)
 		}
 	});
+
+	// process graphical lines
+	let graphicalLines = allEdges.graphicalLines;
+	graphicalLines.forEach((graphicalLine) => {
+		const edge = convertGraphicalLine(graphicalLine, nodeIdSet, portIdMap);
+		edges.push(edge);
+	});
+
 	return edges;
 };
 module.exports = convertEdges;
